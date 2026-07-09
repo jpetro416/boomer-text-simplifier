@@ -84,21 +84,25 @@ def main():
     
     if len(sys.argv) > 1:
         text = " ".join(sys.argv[1:])
+        # Non-interactive mode: use sensible defaults
+        user_status = "I'm doing fine"
+        user_name = ""
+        num_var = 3
     else:
         text = get_multiline_input()
         if not text:
             print("No text provided. Example:")
             print('python boomer_reply_simplifier.py "Hi! I’m doing well! Still having cramping..."')
             return
-    
-    user_status = input("Your status (default: I'm doing fine): ").strip() or "I'm doing fine"
-    user_name = input("Your name/nickname (optional, press Enter to skip): ").strip()
-    
-    try:
-        num_var = int(input("How many reply variations? (1-3, default 3): ").strip() or "3")
-        num_var = max(1, min(3, num_var))
-    except ValueError:
-        num_var = 3
+        
+        user_status = input("Your status (default: I'm doing fine): ").strip() or "I'm doing fine"
+        user_name = input("Your name/nickname (optional, press Enter to skip): ").strip()
+        
+        try:
+            num_var = int(input("How many reply variations? (1-3, default 3): ").strip() or "3")
+            num_var = max(1, min(3, num_var))
+        except ValueError:
+            num_var = 3
     
     replies = generate_replies(text, user_status, user_name, num_var)
     
